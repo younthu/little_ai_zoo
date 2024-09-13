@@ -7,9 +7,10 @@ ML/AI 算法, 工具集合.
 3. 数鸭子
 4. 道路裂纹检测
 5. 手写字体识别
-  6. [https://www.kaggle.com/competitions/digit-recognizer/discussion/61480](https://www.kaggle.com/competitions/digit-recognizer/discussion/61480)
-  7. [full images](http://yann.lecun.com/exdb/mnist/)
-  8. [Lecun的模型效果列表](https://yann.lecun.com/exdb/mnist/)
+    6. [https://www.kaggle.com/competitions/digit-recognizer/discussion/61480](https://www.kaggle.com/competitions/digit-recognizer/discussion/61480)
+    7. [KNN方案](https://www.kaggle.com/code/cdeotte/mnist-perfect-100-using-knn)
+    8. [full images](http://yann.lecun.com/exdb/mnist/)
+    9. [Lecun的模型效果列表](https://yann.lecun.com/exdb/mnist/)
 
 
 # Setup
