@@ -6,7 +6,10 @@ ML/AI 算法, 工具集合.
 2. 数硬币
 3. 数鸭子
 4. 道路裂纹检测
-5. 
+5. 手写字体识别
+  6. [https://www.kaggle.com/competitions/digit-recognizer/discussion/61480](https://www.kaggle.com/competitions/digit-recognizer/discussion/61480)
+  7. [full images](http://yann.lecun.com/exdb/mnist/)
+  8. [Lecun的模型效果列表](https://yann.lecun.com/exdb/mnist/)
 
 
 # Setup
