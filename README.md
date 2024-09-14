@@ -9,8 +9,9 @@ ML/AI 算法, 工具集合.
 5. 手写字体识别
     6. [https://www.kaggle.com/competitions/digit-recognizer/discussion/61480](https://www.kaggle.com/competitions/digit-recognizer/discussion/61480)
     7. [KNN方案](https://www.kaggle.com/code/cdeotte/mnist-perfect-100-using-knn)
-    8. [full images](http://yann.lecun.com/exdb/mnist/)
-    9. [Lecun的模型效果列表](https://yann.lecun.com/exdb/mnist/)
+    8. https://www.kaggle.com/code/cdeotte/how-to-choose-cnn-architecture-mnist
+    9. [full images](http://yann.lecun.com/exdb/mnist/)
+    10. [Lecun的模型效果列表](https://yann.lecun.com/exdb/mnist/)
 
 
 # Setup
