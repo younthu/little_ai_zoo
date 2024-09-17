@@ -7,12 +7,13 @@ ML/AI 算法, 工具集合.
 3. 数鸭子
 4. 道路裂纹检测
 5. 手写字体识别
-    6. [https://www.kaggle.com/competitions/digit-recognizer/discussion/61480](https://www.kaggle.com/competitions/digit-recognizer/discussion/61480)
-    7. [KNN方案](https://www.kaggle.com/code/cdeotte/mnist-perfect-100-using-knn)
-    8. [How to chosse cnn](https://www.kaggle.com/code/cdeotte/how-to-choose-cnn-architecture-mnist)
-    9. [Best CNN for mnist in kaggle](https://www.kaggle.com/code/cdeotte/25-million-images-0-99757-mnist)
-    10. [full images](http://yann.lecun.com/exdb/mnist/)
-    11. [Lecun的模型效果列表](https://yann.lecun.com/exdb/mnist/)
+   1. [https://www.kaggle.com/competitions/digit-recognizer/discussion/61480](https://www.kaggle.com/competitions/digit-recognizer/discussion/61480)
+   2. [SKLearn multinomial logistic regression](https://scikit-learn.org/stable/auto_examples/linear_model/plot_sparse_logistic_regression_mnist.html)
+   1. [KNN方案](https://www.kaggle.com/code/cdeotte/mnist-perfect-100-using-knn)
+   1. [How to chosse cnn](https://www.kaggle.com/code/cdeotte/how-to-choose-cnn-architecture-mnist)
+   1. [Best CNN for mnist in kaggle](https://www.kaggle.com/code/cdeotte/25-million-images-0-99757-mnist)
+   1. [full images](http://yann.lecun.com/exdb/mnist/)
+   1. [Lecun的模型效果列表](https://yann.lecun.com/exdb/mnist/)
 
 
 # Setup
