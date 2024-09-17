@@ -1,0 +1,7 @@
+# sklearn
+sklearn
+
+# pytorch
+torch
+torchvision
+torchaudio
