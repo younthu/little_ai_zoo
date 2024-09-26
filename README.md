@@ -3,9 +3,11 @@
 ML/AI 算法, 工具集合.
 
 1. name2gender, 根据名字猜性别.
-2. 数硬币
-3. 数鸭子
-4. 道路裂纹检测
+1. 鹰眼(Hawkeye)
+    2. 数硬币
+    3. 数鸭子
+    4. 道路裂纹检测
+    1. 拍照算价格
 5. 手写字体识别
    1. [https://www.kaggle.com/competitions/digit-recognizer/discussion/61480](https://www.kaggle.com/competitions/digit-recognizer/discussion/61480)
    2. [SKLearn multinomial logistic regression](https://scikit-learn.org/stable/auto_examples/linear_model/plot_sparse_logistic_regression_mnist.html)
