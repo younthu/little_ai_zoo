@@ -20,6 +20,8 @@ ML/AI 算法, 工具集合.
    1. [Best CNN for mnist in kaggle](https://www.kaggle.com/code/cdeotte/25-million-images-0-99757-mnist)
    1. [full images](http://yann.lecun.com/exdb/mnist/)
    1. [Lecun的模型效果列表](https://yann.lecun.com/exdb/mnist/)
+2. 骰子作图
+3. 数字油画
 
 
 # Setup
