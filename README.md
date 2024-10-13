@@ -12,16 +12,27 @@
     1. 菜品拍照算价格
     2. 表面瑕疵检测
     3. 形状检测
+    4. 拍照识别信用卡类别和卡号.
+    5. 检查作业。
+    6. 门禁人脸识别.
+2. 手写字体识别
+   1. [https://www.kaggle.com/competitions/digit-recognizer/discussion/61480](https://www.kaggle.com/competitions/digit-recognizer/discussion/61480)
+   2. [SKLearn multinomial logistic regression](https://scikit-learn.org/stable/auto_examples/linear_model/plot_sparse_logistic_regression_mnist.html)
+   3. [KNN方案](https://www.kaggle.com/code/cdeotte/mnist-perfect-100-using-knn)
+   4. [How to chosse cnn](https://www.kaggle.com/code/cdeotte/how-to-choose-cnn-architecture-mnist)
+   5. [Best CNN for mnist in kaggle](https://www.kaggle.com/code/cdeotte/25-million-images-0-99757-mnist)
+   6. [full images](http://yann.lecun.com/exdb/mnist/)
+   7. [Lecun的模型效果列表](https://yann.lecun.com/exdb/mnist/)
+3. 变声，声音模拟.
+4. 拍照识别物体,显示说明书。
 5. 手写字体识别
    1. [https://www.kaggle.com/competitions/digit-recognizer/discussion/61480](https://www.kaggle.com/competitions/digit-recognizer/discussion/61480)
    2. [SKLearn multinomial logistic regression](https://scikit-learn.org/stable/auto_examples/linear_model/plot_sparse_logistic_regression_mnist.html)
-   1. [KNN方案](https://www.kaggle.com/code/cdeotte/mnist-perfect-100-using-knn)
-   1. [How to chosse cnn](https://www.kaggle.com/code/cdeotte/how-to-choose-cnn-architecture-mnist)
-   1. [Best CNN for mnist in kaggle](https://www.kaggle.com/code/cdeotte/25-million-images-0-99757-mnist)
-   1. [full images](http://yann.lecun.com/exdb/mnist/)
-   1. [Lecun的模型效果列表](https://yann.lecun.com/exdb/mnist/)
-2. 骰子作图
-3. 数字油画
+   3. [KNN方案](https://www.kaggle.com/code/cdeotte/mnist-perfect-100-using-knn)
+   4. [How to chosse cnn](https://www.kaggle.com/code/cdeotte/how-to-choose-cnn-architecture-mnist)
+   5. [Best CNN for mnist in kaggle](https://www.kaggle.com/code/cdeotte/25-million-images-0-99757-mnist)
+   6. [full images](http://yann.lecun.com/exdb/mnist/)
+   7. [Lecun的模型效果列表](https://yann.lecun.com/exdb/mnist/)
 
 
 # Setup

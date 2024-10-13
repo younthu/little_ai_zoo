@@ -1,7 +1,10 @@
-# sklearn
-sklearn
+# sklearn, the sklearn pypi packaeg is deprecated, use scikit-learn rather than sklearn for pip commands.
+scikit-learn
 
 # pytorch
 torch
 torchvision
 torchaudio
+
+# visualization
+pyecharts # apache echarts for jupyter notebook.https://github.com/pyecharts/pyecharts/
