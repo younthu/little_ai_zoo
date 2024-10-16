@@ -15,7 +15,8 @@
     4. 拍照识别信用卡类别和卡号.
     5. 检查作业。
     6. 门禁人脸识别.
-    7. 验证码识别
+    7. 验证码识别.
+    8. 通过单张验证码来识别字体风格然后整套验证码。
 2. 手写字体识别
    1. [https://www.kaggle.com/competitions/digit-recognizer/discussion/61480](https://www.kaggle.com/competitions/digit-recognizer/discussion/61480)
    2. [SKLearn multinomial logistic regression](https://scikit-learn.org/stable/auto_examples/linear_model/plot_sparse_logistic_regression_mnist.html)
