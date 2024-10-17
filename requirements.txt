@@ -8,3 +8,6 @@ torchaudio
 
 # visualization
 pyecharts # apache echarts for jupyter notebook.https://github.com/pyecharts/pyecharts/
+pygwalker # notebook extension for pandas visualization
+
+# 
