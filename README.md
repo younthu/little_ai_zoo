@@ -4,8 +4,9 @@
 # 需求列表
 1. name2gender, 根据名字猜性别.
 2. 红绿灯识别.
-3. 变声器
-4. 口音模拟器
+3. AI shell, 像autojump和autocompletion一样，推测用户意图的ai shell。
+4. 变声器
+5. 口音模拟器
 1. 鹰眼(Hawkeye)
     1. 数硬币
     1. 数鸭子
