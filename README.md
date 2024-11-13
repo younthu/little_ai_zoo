@@ -7,7 +7,8 @@
 3. AI shell, 像autojump和autocompletion一样，推测用户意图的ai shell。AI cheatsheet.
 4. 变声器
 5. 口音模拟器
-6. ERP AI助手，navigation center. 辅助用户寻找ERP里面各种功能的入口。
+6. 简历解析
+7. ERP AI助手，navigation center. 辅助用户寻找ERP里面各种功能的入口。
 1. 鹰眼(Hawkeye)
     1. 数硬币
     1. 数鸭子
