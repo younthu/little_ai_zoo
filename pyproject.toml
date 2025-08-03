@@ -22,3 +22,15 @@ dependencies = [
 [tool.taskipy.tasks]
 unzip_names = "7z e name2gender/name2gender.Shifenzheng.20050144.csv.7z -o name2gender/name2gender.Shifenzheng.20050144.csv.7z"
 find_best_batch_size = "python name2gender/name2gender.py --find-fast-batch-size"
+
+[tool.uv] # for uv sync, https://github.com/astral-sh/uv/issues/6925#issuecomment-2324110095
+index-url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+[pip]
+index-url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[dependency-groups]
+dev = [
+    "tensorboard>=2.20.0",
+]
+[tool.uv.pip]
+index-url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
