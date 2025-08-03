@@ -14,7 +14,7 @@ from torch.utils.data import DataLoader, TensorDataset
 from loguru import logger
 
 class NameGenderMLP:
-    def __init__(self, csv_path, batch_size=32 * 100, epochs=20, learning_rate=0.001): 
+    def __init__(self, csv_path, batch_size=32 * 100, epochs=20, learning_rate=0.001, skip_hidden3=True): 
         """
         Initializes the NameGenderMLP model.
         :param csv_path: Path to the CSV file containing names and genders.
@@ -26,12 +26,13 @@ class NameGenderMLP:
         self.batch_size = batch_size
         self.epochs = epochs
         self.learning_rate = learning_rate
+        self.skip_hidden3 = skip_hidden3
 
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
         # If mps available, use it
-        # if torch.backends.mps.is_available():
-        #     self.device = torch.device('mps')
+        if torch.backends.mps.is_available():
+            self.device = torch.device('mps')
 
         logger.info(f'Using device: {self.device}')
 
@@ -87,8 +88,9 @@ class NameGenderMLP:
         logger.info(f'Test set size: {len(test_dataset)}')
 
     class MLP(nn.Module):
-        def __init__(self, input_dim=3, hidden1=64 , hidden2=32, hidden3=32, output_dim=2): # hidden1 and hidden2 are hyperparameters, 64, 32 by default
+        def __init__(self, input_dim=3, hidden1=64 * 100, hidden2=32 * 100, hidden3=32 * 100, output_dim=2, skip_hidden3=True): # hidden1 and hidden2 are hyperparameters, 64, 32 by default
             super().__init__()
+            self.skip_hidden3 = skip_hidden3
             self.fc1 = nn.Linear(input_dim, hidden1)
             self.relu1 = nn.ReLU()
             self.fc2 = nn.Linear(hidden1, hidden2)
@@ -104,14 +106,15 @@ class NameGenderMLP:
             x = self.relu1(x)
             x = self.fc2(x)
             x = self.relu2(x)
-            x = self.fc3(x)
-            x = self.relu3(x)
+            if not self.skip_hidden3:
+                x = self.fc3(x)
+                x = self.relu3(x)
             x = self.fc4(x)
             x = self.softmax(x)  # Softmax is applied here, but CrossEntropyLoss expects raw logits
             return x  # CrossEntropyLoss includes softmax
 
     def build_model(self):
-        self.model = self.MLP().to(self.device)
+        self.model = self.MLP(skip_hidden3=self.skip_hidden3).to(self.device)
         self.criterion = nn.CrossEntropyLoss()
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.learning_rate)
 
@@ -143,6 +146,9 @@ class NameGenderMLP:
         logger.info('TensorBoard logging initialized.')
 
         # Start training loop
+        # Make sure the train is resumable
+        logger.info(f'Starting training for {self.epochs} epochs...')
+        # Track time for each epoch
         for epoch in range(self.epochs):
             # start of time tracking
             logger.info(f'Starting epoch {epoch+1}/{self.epochs}')
@@ -158,6 +164,7 @@ class NameGenderMLP:
                 total_loss += loss.item()
                 # Log the loss to TensorBoard
                 self.writer.add_scalar('Loss/train', loss.item(), epoch * len(self.train_loader) + len(self.train_loader))
+
             # Calculate average loss for the epoch
             avg_loss = total_loss / len(self.train_loader)
             # Log the average loss for the epoch, and time taken
