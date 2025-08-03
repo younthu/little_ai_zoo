@@ -10,9 +10,34 @@ from sklearn.metrics import classification_report, accuracy_score
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import DataLoader, TensorDataset
+from torch.utils.data import DataLoader, TensorDataset, Dataset
 from loguru import logger
 
+
+# 1. 数据预处理：将名称转换为特征
+class NameDataset(Dataset):
+    def __init__(self, names, genders, max_len=10):
+        self.names = names
+        self.genders = genders
+        self.max_len = max_len
+        self.chars = string.ascii_letters + " '-"  # 考虑常见姓名字符
+        self.char_to_idx = {c: i+1 for i, c in enumerate(self.chars)}  # 0留作填充
+        self.vocab_size = len(self.chars) + 1
+
+    def __len__(self):
+        return len(self.names)
+
+    def __getitem__(self, idx):
+        name = self.names[idx].lower()
+        # 字符编码：将名称转换为固定长度的索引序列
+        name_encoded = [self.char_to_idx.get(c, 0) for c in name[:self.max_len]]
+        # 填充到固定长度
+        name_encoded += [0] * (self.max_len - len(name_encoded))
+        # 性别编码：0->女，1->男
+        gender = 1 if self.genders[idx] == 'M' else 0
+        return (torch.tensor(name_encoded, dtype=torch.long),
+                torch.tensor(gender, dtype=torch.float32))
+    
 class NameGenderMLP:
     def __init__(self, csv_path, batch_size=32 * 100, epochs=20, learning_rate=0.001, skip_hidden3=True): 
         """
@@ -83,6 +108,10 @@ class NameGenderMLP:
         self.train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
         self.test_loader = DataLoader(test_dataset, batch_size=self.batch_size, shuffle=False)
 
+        train_dataset = NameDataset(train_names, train_genders)
+        val_dataset = NameDataset(val_names, val_genders)
+        self.train_loader = DataLoader(train_dataset, batch_size=4000, shuffle=True)
+        self.test_loader = DataLoader(val_dataset, batch_size=4000, shuffle=False)
         # print some stats
         logger.info(f'Training set size: {len(train_dataset)}')
         logger.info(f'Test set size: {len(test_dataset)}')
@@ -159,9 +188,9 @@ class NameGenderMLP:
                 self.optimizer.zero_grad()
                 outputs = self.model(X_batch)
                 loss = self.criterion(outputs, y_batch)
-                loss.backward()
-                self.optimizer.step()
-                total_loss += loss.item()
+                loss.backward() # 计算梯度
+                self.optimizer.step() # 更新参数
+                total_loss += loss.item() # Accumulate loss for the epoch
                 # Log the loss to TensorBoard
                 self.writer.add_scalar('Loss/train', loss.item(), epoch * len(self.train_loader) + len(self.train_loader))
 

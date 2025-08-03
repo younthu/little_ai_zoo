@@ -4,3 +4,6 @@ MNIST/.ipynb_checkpoints
 PoisonousChickenSoup/.ipynb_checkpoints
 samples/.ipynb_checkpoints
 logs
+MNIST/Model
+data/MNIST/raw
+name2gender/runs
