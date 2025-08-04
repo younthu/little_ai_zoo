@@ -14,18 +14,29 @@ from torch.utils.data import DataLoader, TensorDataset, Dataset
 from loguru import logger
 
 
+# Class for char to index mapping
+class CharToIdx:
+    def __init__(self, names):
+        self.chars = set(''.join(names))
+        self.char_to_idx = {c: i+1 for i, c in enumerate(self.chars)}  # 0留作填充
+        self.vocab_size = len(self.chars) + 1
+
+    def __getitem__(self, char):
+        return self.char_to_idx.get(char, 0)
+
 # 1. 数据预处理：将名称转换为特征
 class NameDataset(Dataset):
-    def __init__(self, names, genders, max_len=10):
+    def __init__(self, names, genders, char_to_idx: CharToIdx, max_len=10):
         self.names = names
         self.genders = genders
         self.max_len = max_len
         # names to characters and create a character set
         self.names = [name.lower() for name in names]  # 转为小写
         # self.name_chars = set(''.join(self.names))
-        self.chars = set(''.join(self.names))
-        self.char_to_idx = {c: i+1 for i, c in enumerate(self.chars)}  # 0留作填充
-        self.vocab_size = len(self.chars) + 1
+        # self.chars = set(''.join(self.names))
+        # self.char_to_idx = {c: i+1 for i, c in enumerate(self.chars)}  # 0留作填充
+        # self.vocab_size = len(self.chars) + 1
+        self.char_to_idx = char_to_idx.char_to_idx
 
     def __len__(self):
         return len(self.names)
@@ -101,27 +112,30 @@ class NameGenderMLP:
         )
 
         # Convert to torch tensors
-        X_train_tensor = torch.tensor(X_train, dtype=torch.float32)
-        y_train_tensor = torch.tensor(y_train, dtype=torch.long)
-        X_test_tensor = torch.tensor(X_test, dtype=torch.float32)
-        y_test_tensor = torch.tensor(y_test, dtype=torch.long)
+        # X_train_tensor = torch.tensor(X_train, dtype=torch.float32)
+        # y_train_tensor = torch.tensor(y_train, dtype=torch.long)
+        # X_test_tensor = torch.tensor(X_test, dtype=torch.float32)
+        # y_test_tensor = torch.tensor(y_test, dtype=torch.long)
 
-        train_dataset = TensorDataset(X_train_tensor, y_train_tensor)
-        test_dataset = TensorDataset(X_test_tensor, y_test_tensor)
+        # train_dataset = TensorDataset(X_train_tensor, y_train_tensor)
+        # test_dataset = TensorDataset(X_test_tensor, y_test_tensor)
 
-        self.train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
-        self.test_loader = DataLoader(test_dataset, batch_size=self.batch_size, shuffle=False)
+        # self.train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
+        # self.test_loader = DataLoader(test_dataset, batch_size=self.batch_size, shuffle=False)
+
+        # Create char to index mapping
+        char_to_idx = CharToIdx(df['Name'].tolist())
 
         train_names, val_names, train_genders, val_genders = train_test_split(
             df['Name'].tolist(), df['Gender'].tolist(), test_size=0.2, random_state=42
         )
-        train_dataset = NameDataset(train_names, train_genders)
-        val_dataset = NameDataset(val_names, val_genders)
+        train_dataset = NameDataset(train_names, train_genders, char_to_idx, max_len=10)
+        val_dataset = NameDataset(val_names, val_genders, char_to_idx, max_len=10)
         self.train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
         self.test_loader = DataLoader(val_dataset, batch_size=self.batch_size, shuffle=False)
         # print some stats
         logger.info(f'Training set size: {len(train_dataset)}')
-        logger.info(f'Test set size: {len(test_dataset)}')
+        logger.info(f'Test set size: {len(val_dataset)}')
         
         # logger some sample training data
         logger.info(f'Sample training data: {train_dataset[0]}')
