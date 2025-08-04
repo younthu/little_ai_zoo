@@ -141,7 +141,7 @@ class NameGenderMLP:
         logger.info(f'Sample training data: {train_dataset[0]}')
 
     class MLP(nn.Module):
-        def __init__(self, input_dim=10, hidden1=64 * 100, hidden2=32 * 100, hidden3=32 * 100, output_dim=2, skip_hidden3=True): # input_dim=10
+        def __init__(self, input_dim=10, hidden1=64 * 100, hidden2=32 * 1, hidden3=32 * 1, output_dim=2, skip_hidden3=True): # input_dim=10
             super().__init__()
             self.skip_hidden3 = skip_hidden3
             self.fc1 = nn.Linear(input_dim, hidden1)
