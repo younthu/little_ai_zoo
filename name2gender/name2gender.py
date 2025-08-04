@@ -20,7 +20,10 @@ class NameDataset(Dataset):
         self.names = names
         self.genders = genders
         self.max_len = max_len
-        self.chars = string.ascii_letters + " '-"  # 考虑常见姓名字符
+        # names to characters and create a character set
+        self.names = [name.lower() for name in names]  # 转为小写
+        # self.name_chars = set(''.join(self.names))
+        self.chars = set(''.join(self.names))
         self.char_to_idx = {c: i+1 for i, c in enumerate(self.chars)}  # 0留作填充
         self.vocab_size = len(self.chars) + 1
 
@@ -35,7 +38,7 @@ class NameDataset(Dataset):
         name_encoded += [0] * (self.max_len - len(name_encoded))
         # 性别编码：0->女，1->男
         gender = 1 if self.genders[idx] == 'M' else 0
-        return (torch.tensor(name_encoded, dtype=torch.long),
+        return (torch.tensor(name_encoded, dtype=torch.float32),   # <-- changed here
                 torch.tensor(gender, dtype=torch.float32))
     
 class NameGenderMLP:
@@ -82,11 +85,12 @@ class NameGenderMLP:
         # Get 6479097 M and 6479097 F
         df = df.groupby('Gender').sample(n=6479097, random_state=42)
 
-
-        df['Name'] = df['Name'].apply(self.pad_name)
-        df['Char1'] = df['Name'].str[0]
-        df['Char2'] = df['Name'].str[1]
-        df['Char3'] = df['Name'].str[2]
+        # names to str
+        df['Name'] = df['Name'].astype(str)
+        df['Name2'] = df['Name'].apply(self.pad_name)
+        df['Char1'] = df['Name2'].str[0]
+        df['Char2'] = df['Name2'].str[1]
+        df['Char3'] = df['Name2'].str[2]
 
         X_chars = df[['Char1', 'Char2', 'Char3']]
         X_encoded = self.encoder.fit_transform(X_chars)
@@ -108,16 +112,22 @@ class NameGenderMLP:
         self.train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
         self.test_loader = DataLoader(test_dataset, batch_size=self.batch_size, shuffle=False)
 
+        train_names, val_names, train_genders, val_genders = train_test_split(
+            df['Name'].tolist(), df['Gender'].tolist(), test_size=0.2, random_state=42
+        )
         train_dataset = NameDataset(train_names, train_genders)
         val_dataset = NameDataset(val_names, val_genders)
-        self.train_loader = DataLoader(train_dataset, batch_size=4000, shuffle=True)
-        self.test_loader = DataLoader(val_dataset, batch_size=4000, shuffle=False)
+        self.train_loader = DataLoader(train_dataset, batch_size=self.batch_size, shuffle=True)
+        self.test_loader = DataLoader(val_dataset, batch_size=self.batch_size, shuffle=False)
         # print some stats
         logger.info(f'Training set size: {len(train_dataset)}')
         logger.info(f'Test set size: {len(test_dataset)}')
+        
+        # logger some sample training data
+        logger.info(f'Sample training data: {train_dataset[0]}')
 
     class MLP(nn.Module):
-        def __init__(self, input_dim=3, hidden1=64 * 100, hidden2=32 * 100, hidden3=32 * 100, output_dim=2, skip_hidden3=True): # hidden1 and hidden2 are hyperparameters, 64, 32 by default
+        def __init__(self, input_dim=10, hidden1=64 * 100, hidden2=32 * 100, hidden3=32 * 100, output_dim=2, skip_hidden3=True): # input_dim=10
             super().__init__()
             self.skip_hidden3 = skip_hidden3
             self.fc1 = nn.Linear(input_dim, hidden1)
@@ -143,7 +153,7 @@ class NameGenderMLP:
             return x  # CrossEntropyLoss includes softmax
 
     def build_model(self):
-        self.model = self.MLP(skip_hidden3=self.skip_hidden3).to(self.device)
+        self.model = self.MLP(input_dim=10, skip_hidden3=self.skip_hidden3).to(self.device)
         self.criterion = nn.CrossEntropyLoss()
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.learning_rate)
 
@@ -171,7 +181,7 @@ class NameGenderMLP:
         # Setup tensorboard logging
         from torch.utils.tensorboard import SummaryWriter 
         self.writer = SummaryWriter(log_dir='logs/name2gender')
-        self.writer.add_graph(self.model, torch.randn(1, 3).to(self.device))  # Add model graph to TensorBoard
+        self.writer.add_graph(self.model, torch.randn(1, 10).to(self.device))  # Add model graph to TensorBoard
         logger.info('TensorBoard logging initialized.')
 
         # Start training loop
