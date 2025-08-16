@@ -5,7 +5,11 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "langchain-community>=0.3.27",
+    "langchain-core>=0.3.74",
+    "langchain-openai>=0.3.30",
     "loguru>=0.7.3",
+    "mcp>=1.13.0", # https://github.com/modelcontextprotocol/python-sdk , official MCP Python SDK
     "pandas>=2.3.1",
     "scikit-learn>=1.7.1",
     "tensorboard>=2.20.0",
@@ -13,6 +17,12 @@ dependencies = [
     "torch>=2.7.1",
     "torchaudio>=2.7.1",
     "torchvision>=0.22.1",
+    "wikipedia>=1.4.0",
+]
+
+[dependency-groups]
+dev = [
+    "tensorboard>=2.20.0",
 ]
 
 # Taskipy scripts
@@ -22,15 +32,12 @@ dependencies = [
 [tool.taskipy.tasks]
 unzip_names = "7z e name2gender/name2gender.Shifenzheng.20050144.csv.7z -o name2gender/name2gender.Shifenzheng.20050144.csv.7z"
 find_best_batch_size = "python name2gender/name2gender.py --find-fast-batch-size"
+math_genius="python math_agents/main.py --model gpt-4o --task math_genius --input '1+1' --output '2' --verbose"
 
+# mirrors
 [tool.uv] # for uv sync, https://github.com/astral-sh/uv/issues/6925#issuecomment-2324110095
 index-url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 [pip]
 index-url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
-
-[dependency-groups]
-dev = [
-    "tensorboard>=2.20.0",
-]
 [tool.uv.pip]
 index-url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"

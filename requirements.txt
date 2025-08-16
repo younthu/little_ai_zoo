@@ -6,7 +6,11 @@ torch
 torchvision
 torchaudio
 
+# Tensorflow
+tensorflow
+
 # visualization
+matplotlib
 pyecharts # apache echarts for jupyter notebook.https://github.com/pyecharts/pyecharts/
 
 # jupyter lab
